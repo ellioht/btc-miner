@@ -1,9 +1,11 @@
 package common
 
 import (
+	"bytes"
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
+	"math/big"
 )
 
 const (
@@ -29,6 +31,12 @@ func (h Hash) Str() string {
 
 func (h Hash) Bytes() []byte {
 	return h[:]
+}
+
+func (h Hash) Big() *big.Int {
+	b := h.CloneBytes()
+	rev := ReverseBytes(b)
+	return new(big.Int).SetBytes(rev[:])
 }
 
 func (h *Hash) CloneBytes() []byte {
@@ -61,6 +69,10 @@ func (h *Hash) UnmarshalJSON(data []byte) error {
 	return h.SetBytes(rev)
 }
 
+func (h Hash) Cmp(other Hash) int {
+	return bytes.Compare(h[:], other[:])
+}
+
 func BytesToHash(b []byte) Hash {
 	var h Hash
 	copy(h[:], b)
@@ -80,4 +92,8 @@ func StringToHash(s string) Hash {
 		panic(err)
 	}
 	return BytesToHash(bytes)
+}
+
+func (h Hash) Reverse() Hash {
+	return BytesToHash(ReverseBytes(h.Bytes()))
 }
