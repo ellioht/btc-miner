@@ -19,3 +19,9 @@ func (a Address) String() string {
 func (a Address) Bytes() []byte {
 	return a[:]
 }
+
+func StringToAddress(addr string) Address {
+	var a Address
+	copy(a[:], addr)
+	return a
+}

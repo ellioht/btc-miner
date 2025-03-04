@@ -45,6 +45,7 @@ type GetBlockTemplateResult struct {
 	PreviousBlockHash        common.Hash    `json:"previousblockhash"`
 	Transactions             []Transaction  `json:"transactions"`
 	CoinbaseAux              interface{}    `json:"coinbaseaux"`
+	CoinbaseValue            uint64         `json:"coinbasevalue"`
 	LongPollID               string         `json:"longpollid"`
 	Target                   string         `json:"target"`
 	MinTime                  int            `json:"mintime"`
